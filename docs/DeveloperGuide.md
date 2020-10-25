@@ -4,7 +4,7 @@
 1. [Introduction](#1-introduction)
 <br/>&nbsp;1.1 [Purpose](#11-purpose)
 <br/>&nbsp;1.2 [Using this Guide](#12-using-this-guide)
-2. [Setting up](#2-setting-up)
+2. [Setting Up](#2-setting-up)
 3. [Design](#3-design)
 <br/>&nbsp;3.1 [Architecture](#31-architecture)
 <br/>&nbsp;3.2 [UI Component](#32-ui-component)
@@ -12,17 +12,17 @@
 <br/>&nbsp;3.4 [Command Component](#34-command-component)
 <br/>&nbsp;3.5 [AnimeData Component](#35-animedata-component)
 <br/>&nbsp;3.6 [User Component](#36-user-component)
-<br/>&nbsp;3.7 [StorageManager Component](#37-storagemanager-component)
+<br/>&nbsp;3.7 [Storage Component](#37-storage-component)
 4. [Implementation](#4-implementation)
 <br/>&nbsp;4.1 [Workspace Feature](#41-workspace-feature)
 <br/>&nbsp;4.2 [Estimation Feature](#42-estimation-feature)
 <br/>&nbsp;4.3 [Bookmark Feature](#43-bookmark-feature)
 <br/>&nbsp;4.4 [Browse Feature](#44-browse-feature)
-5. [Produce scope](#5-product-scope)
-<br/>&nbsp;5.1 [Target user profile]()
-<br/>&nbsp;5.2 [Value proposition]()
-6. [User stories](#6-user-stories)
-7. [Non-functional requirements](#7-non-functional-requirements)
+5. [Produce Scope](#5-product-scope)
+<br/>&nbsp;5.1 [Target User Profile]()
+<br/>&nbsp;5.2 [Value Proposition]()
+6. [User Stories](#6-user-stories)
+7. [Non-Functional Requirements](#7-non-functional-requirements)
 8. [Documentation, logging, testing, configuration, dev-ops](#8-documentation-logging-testing-configuration-dev-ops)
 9. [Glossary](#9-glossary)
 10. [Appendices](#10-appendices)
@@ -95,7 +95,7 @@ This section will help provide insight to the general overview of Anichan’s ar
 
 <br/>
 
-![Architectural Diagram](images/Architectural-Class-Diagram.png)
+![Architectural Diagram](images/Architectural-Design.png)
 
 *Figure 1: Architecture Diagram*
 
@@ -195,15 +195,89 @@ The `Workspace` component:
 
 <br/>
 
-### 3.7 StorageManager Component
-![StorageManager Component Diagram](images/StorageManager-Class-Diagram.png) <br/>
-*Figure 8: StorageManager Component Diagram*
+### 3.7 Storage Component
+![Storage Component Diagram](images/Storage-Class-Diagram.png) <br/>
+*Figure 8: Storage Component Diagram*
 
-The `StorageManager` component: 
+The `Storage` component consist of `StorageManager` which:
+* can **save** workspace created by the user as a folder.
 * can **save** user, watchlist and bookmark data in `.txt` format and **read it back** using 
 their respective storage class, `UserStorage`, `WatchlistStorage`, and `BookmarkStorage`.
-* can **read** script files that are in `.txt` format using the `ScriptStorage` class.
+* can **read** script files that are in `.txt` format using the class `ScriptStorage`.
 
 **AniChan** saved these data as `.txt` files so advanced users will be able to view and manipulate these saved data easily with any available text editor.
+
+<br/>
+
+### 4.6 Estimation Feature
+
+The `estimate` feature aims to provide translators with better estimates on the time needed to translate a script based on their capability. Hence, users will be able to ensure they do not overpromise their clients.
+
+| :bulb:  | The application only accepts `.txt` files. |
+|---------------|:------------------------|
+
+<br/>
+
+#### 4.6.1 Current Implementation
+
+The `estimate` feature is facilitated by `EstimateCommand`, which extends from the abstract class `Command`. In addition, it implements the following operation: 
+* `EstimateCommand#timeNeededToString()`: Converts the time calculated into a `String` that displays the hour(s) and minute(s) needed.
+
+`EstimateCommand` is instantiated by `EstimateParser`, and it requires one mandatory and one optional parameter, namely the `ScriptFileName` and `wordsPerHour`. If the optional parameter is not specified, the values 400, 500, and 600 words per hour (average translators’ speed) are used to generate 3 estimation timings.
+
+<br/>
+
+Given below is an example usage scenario and how the `estimate` command behaves at each step.
+
+**Step 1:** User inputs the command `estimate script.txt -wph 300`, the application calls `Parser#getCommand()` and passes the command to it.
+
+**Step 2:** `Parser` extracts “estimate” from the command, and according to the command type, it calls `EstimateParser#parse()`.
+
+**Step 3:** `EstimateParser` parses the command, extracts and validates the inputs “script.txt” and “300”. If no exception has been thrown, it creates and initialises `EstimateCommand` with “script.txt” and “300”, and returns it to `Parser`, which then returns it to `Main`.
+
+**Step 4:** `EstimateParser` is terminated, and the application calls `EstimateCommand#execute()`.
+
+**Step 5:** `EstimateCommand` calls `User#getActiveWorkspace` to initialise `activeWorkspace`. It then calls `StorageManager#loadScript()` to get the file content, and passes the workspace name (obtained by calling `getName()` on `activeWorkspace`) and `scriptFileName` to it.
+
+**Step 6:** `EstimateCommand` calculates the estimated time using the file content and the `wordsPerHour` value specified, converts the value to a human readable format by calling `EstimateCommand#timeNeededToString()`, and return the command result for printing to the user.
+
+**Step 7:** `EstimateCommand` is terminated.
+
+<br/>
+
+![EstimateCommand Sequence Diagram](images/EstimateCommand-Sequence-Diagram.png)
+*Figure x. Sequence diagram for estimating translation time needed for a script*
+
+<br/>
+
+**4.6.2 Design Consideration**
+
+This section shows some design considerations taken when implementing the estimate feature.
+
+**Aspect: Reading of script file content**
+
+**Alternative 1 (current design): During command execution**
+* Pros: Easy to implement since `Command` already handle file matters.
+* Cons: Waiting till command execution to validate the existence and validity of the script file would have wasted some memory resources.
+
+**Alternative 2: During parsing**
+* Pros: Ensures the command does not fail execution due to invalid file.
+* Cons: Decreases cohesion as `Parser` now has to handle file matters on top of parsing matters, and this would affect the understandability, maintainability and reusability of the class. 
+
+Having considered both of the alternatives, we have decided to implement the first alternative, that is to **read script file content during command execution** because we do not want to decrease the cohension of `Parser`, and we find that the memory resource that are wasted in the process is a worthy exchange for the cohesion preserved.
+
+<br/>
+
+**Aspect: Script file name input**
+
+**Alternative 1 (current design): User have to specify file extension**
+* Pros: Ensures that the correct file will be read.
+* Cons: Some users may not be aware of how to identify their file extension.
+
+**Alternative 2: User do not have to specify file extension**
+* Pros: Users can easily specify the file to read and do not have to worry about knowing the file extension.
+* Cons: The application may end up reading the wrong file if there happens to be two files with the same file name but different file extension.
+
+We have decided to the implement the first alternative, **users should specify the file extension in their input** because the importance of getting a correct estimation timing would outweighs and compensate for the hassle of entering the file extension. Moreover, we could end up losing potential users of the product as using the wrong estimation timing could be a costly mistake for these users.
 
 <br/>
