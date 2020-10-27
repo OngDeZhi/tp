@@ -35,12 +35,19 @@ public class Note implements DateTime {
         this.deadlines.add(null);
     }
 
-    public String getNote(Integer noteIndex) {
+    public String getNote(int noteIndex) {
         return notes.get(noteIndex);
     }
 
     public int getSize() {
         return notes.size();
+    }
+
+    public String removeNote(int noteIndex) {
+        String note = notes.get(noteIndex);
+        this.notes.remove(noteIndex);
+        this.deadlines.remove(noteIndex);
+        return note;
     }
 
     @Override

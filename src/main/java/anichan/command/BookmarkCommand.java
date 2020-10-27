@@ -14,11 +14,15 @@ import static anichan.logger.AniLogger.getAniLogger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BookmarkAnimeCommand extends Command {
+public class BookmarkCommand extends Command {
 
-    private static final String ANIME_ID_ERROR = " Anime index is outside AnimeData range (too big or too small).";
+    private static final String ANIME_ID_ERROR = " Anime index is outside AnimeData range "
+            + "(Bigger than number of anime).";
     private static final String ANIME_ID_EXIST_ERROR = " Anime index is already in bookmark.";
-    private static final String BOOKMARK_ID_ERROR = " Bookmark index is outside Bookmark range (too big or too small).";
+    private static final String BOOKMARK_ID_ERROR = " Bookmark index is outside Bookmark range "
+            + "(Bigger than bookmark entries).";
+    private static final String NOTES_ID_ERROR = " Bookmark index is outside Bookmark range "
+            + "(Bigger than number of notes).";
     private static final String BOOKMARK_EXECUTE_ERROR_HEADER = "Bookmark command execute failed:";
     private static final String BOOKMARK_ERROR_MESSAGE = " provided is invalid.";
     private static final String BOOKMARK_EXECUTE_EDIT = "Executing Edit Episode.";
@@ -29,12 +33,15 @@ public class BookmarkAnimeCommand extends Command {
     private static final String BOOKMARK_LIST_HEADER = "Listing all anime in bookmark:";
     private int bookmarkIndex;
     private int animeIndex;
+
+
+    private int noteIndex;
     private int bookmarkEpisode;
     private String bookmarkAction;
     private String bookmarkNote;
-    private static final Logger LOGGER = getAniLogger(BookmarkAnimeCommand.class.getName());
+    private static final Logger LOGGER = getAniLogger(BookmarkCommand.class.getName());
 
-    public BookmarkAnimeCommand() {
+    public BookmarkCommand() {
         // Set log levels
         // LOGGER.setLevel(Level.WARNING);
         bookmarkAction = null;
@@ -78,6 +85,11 @@ public class BookmarkAnimeCommand extends Command {
             result = addNoteToBookmark(animeData, bookmark);
             storageManager.saveBookmark(workspace.getName(), bookmark);
             break;
+        case BookmarkParser.REMOVE_NOTE_PARAM:
+            LOGGER.log(Level.INFO, "Executing bookmark add note");
+            result = removeNoteFromBookmark(animeData, bookmark);
+            storageManager.saveBookmark(workspace.getName(), bookmark);
+            break;
         default:
             break;
         }
@@ -107,6 +119,16 @@ public class BookmarkAnimeCommand extends Command {
     private String getAnimeNotesFromBookmark(Bookmark bookmark) {
         String notesInfo = bookmark.getNoteInString(bookmarkIndex - 1);
         return notesInfo;
+    }
+
+    private String removeNoteFromBookmark(AnimeData animeData, Bookmark bookmark) throws AniException {
+        checkBookmarkIndex(bookmark);
+        checkNoteIndex(bookmark);
+        String result = "Deleting note: ";
+        result += bookmark.removeNote(bookmarkIndex - 1, noteIndex - 1);
+        Anime animeToRemoveNote = bookmark.getAnimeBookmarkByIndex(animeData, bookmarkIndex - 1);
+        result += System.lineSeparator() + "From " + animeToRemoveNote.getAnimeName() + ".";
+        return result;
     }
 
     private String addNoteToBookmark(AnimeData animeData, Bookmark bookmark) throws AniException {
@@ -172,6 +194,16 @@ public class BookmarkAnimeCommand extends Command {
         }
     }
 
+    private void checkNoteIndex(Bookmark bookmark) throws AniException {
+        //Bookmark index is one based numbering
+        if (noteIndex > bookmark.getNotesSize(bookmarkIndex - 1)) {
+            String invalidBookmarkIndex = "Notes index " + noteIndex + BOOKMARK_ERROR_MESSAGE
+                    + System.lineSeparator() + NOTES_ID_ERROR;
+            LOGGER.log(Level.WARNING, BOOKMARK_EXECUTE_ERROR_HEADER + invalidBookmarkIndex);
+            throw new AniException(invalidBookmarkIndex);
+        }
+    }
+
     private void checkAnimeIndex(AnimeData animeData) throws AniException {
         //Anime index is one based numbering
         if (animeIndex > animeData.getSize()) {
@@ -209,4 +241,9 @@ public class BookmarkAnimeCommand extends Command {
     public void setBookmarkNote(String note) {
         this.bookmarkNote = note;
     }
+
+    public void setNoteIndex(String noteIndex) {
+        this.noteIndex = Integer.parseInt(noteIndex);
+    }
+
 }

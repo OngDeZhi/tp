@@ -17,13 +17,13 @@ public class Bookmark {
         this.noteList = new ArrayList<>();
     }
 
-    public void addAnimeBookmark(Integer animeIndex) {
+    public void addAnimeBookmark(int animeIndex) {
         this.animeBookmarkList.add(animeIndex);
         this.animeEpisode.add(0);
         this.noteList.add(new Note());
     }
 
-    public void addAnimeBookmarkEpisode(Integer animeIndex, Integer episodeNumber, Note note) {
+    public void addAnimeBookmarkEpisode(int animeIndex, int episodeNumber, Note note) {
         this.animeBookmarkList.add(animeIndex);
         this.animeEpisode.add(episodeNumber);
         this.noteList.add(note);
@@ -50,11 +50,11 @@ public class Bookmark {
         return noteList;
     }
 
-    public int getBookmarkEpisode(Integer bookmarkIndex) {
+    public int getBookmarkEpisode(int bookmarkIndex) {
         return animeEpisode.get(bookmarkIndex);
     }
 
-    public Anime getAnimeBookmarkByIndex(AnimeData animeData, Integer bookmarkIndex) {
+    public Anime getAnimeBookmarkByIndex(AnimeData animeData, int bookmarkIndex) {
         int animeIndex = this.animeBookmarkList.get(bookmarkIndex);
         return animeData.getAnime(animeIndex);
     }
@@ -63,15 +63,19 @@ public class Bookmark {
         return animeBookmarkList.size();
     }
 
-    public void addNote(Integer bookmarkIndex, String note) {
+    public int getNotesSize(int bookmarkIndex) {
+        return  this.noteList.get(bookmarkIndex).getSize();
+    }
+
+    public void addNote(int bookmarkIndex, String note) {
         this.noteList.get(bookmarkIndex).addNote(note);
     }
 
-    public void addNote(Integer bookmarkIndex, String note, String date) throws AniException {
+    public void addNote(int bookmarkIndex, String note, String date) throws AniException {
         this.noteList.get(bookmarkIndex).addNote(note, date);
     }
 
-    public String getNoteInString(Integer bookmarkIndex) {
+    public String getNoteInString(int bookmarkIndex) {
         StringBuilder sbNoteList = new StringBuilder(System.lineSeparator());
         if (noteList.get(bookmarkIndex).getSize() == 0) {
             sbNoteList.append("\tNotes is empty.. :(");
@@ -84,6 +88,11 @@ public class Bookmark {
             }
         }
         return sbNoteList.toString();
+    }
+
+    public String removeNote(int bookmarkIndex, int noteIndex) {
+        String removeNote = noteList.get(bookmarkIndex).removeNote(noteIndex);
+        return removeNote;
     }
 
     public String getListInString(AnimeData animeData) {
@@ -103,11 +112,11 @@ public class Bookmark {
         return sbAnimeList.toString();
     }
 
-    public String getAnimeBookmarkInfo(AnimeData animeData, Integer bookmarkIndex) {
+    public String getAnimeBookmarkInfo(AnimeData animeData, int bookmarkIndex) {
         return animeData.returnAnimeInfo(this.animeBookmarkList.get(bookmarkIndex));
     }
 
-    public boolean checkExist(Integer animeIndex) {
+    public boolean checkExist(int animeIndex) {
         boolean alreadyExist = false;
         for (Integer animeID : animeBookmarkList) {
             if (animeID.equals(animeIndex)) {
