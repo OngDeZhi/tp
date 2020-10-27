@@ -313,7 +313,7 @@ Format: `watchlist -d <WATCHLIST_INDEX>`
 
 > :bulb: Deletion only works when you have at least two watchlist.
 
-> :warning: If you delete your currently active watchlist, then the watchlist whose index is 1 in the list (after the deletion) will become your active watchlist.
+> :warning: If you delete the active watchlist, then the watchlist whose index is 1 in the list (after the deletion) will become the new active watchlist.
 
 <br/>
 
