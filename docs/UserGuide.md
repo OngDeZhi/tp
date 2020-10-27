@@ -334,7 +334,14 @@ Changed active watchlist to: "Default".
 
 <br/>
 
-### 3.10
+### 3.10 Saving and loading data
+
+User, workspace(s), watchlist(s), and bookmark(s) data will be **saved automatically** when they are created or modified, and will be **loaded automatically** when **AniChan** is launched. 
+
+In the folder where **AniChan** is launched, there will be a `data` folder which would contain these data:
+* User data will be stored in `data/user.txt`.
+* Watchlist(s) data will be stored in `data/<WORKSPACE-NAME>/watchlist.txt`, e.g. if your workspace is called "AniTranslator", then the watchlist data can be found in `data/AniTranslator/watchlist.txt`.
+* Bookmark(s) data will also be stored in the same location as watchlist data, `data/WORKSPACE-NAME/bookmark.txt`.
 
 <br/>
 
@@ -457,63 +464,6 @@ Successfully deleted workspace: Default
 
 <br/>
 
-### 3.4 Watchlist management: `watchlist`
-This command handles all watchlist management related operations: 
-*   Create a new watchlist.
-*   List all created watchlist(s).
-*   Select another watchlist to use.
-*   Delete a watchlist that is no longer needed.
-
-Note:
-*   Active watchlist refers to the watchlist that you are currently using for 
-adding anime into or removing anime from.
-
-Format: 
-*   `watchlist -n <WATCHLIST_NAME>`
-*   `watchlist -l`
-*   `watchlist -s <WATCHLIST_INDEX>`
-*   `watchlist -d <WATCHLIST_INDEX>`
-
-Example of usage: `watchlist -n Adventure Anime`
-*   Ensure the watchlist name is unique in your workspace.
-
-The expected outcome: 
-```
-Watchlist "Adventure Anime" has been created successfully!
-```
-
-Example of usage: `watchlist -l`
-
-The expected outcome: 
-```
-Currently, you have 2 watchlist(s):
-	1. Default
-	2. Adventure Anime
-```
-
-Example of usage: `watchlist -s 2`
-*   Selected watchlist is also known as the **active watchlist**, which is the one
-that you are using for adding anime into or removing anime from.
-*   Notice how the name of the watchlist in the bracket of your prompt have changed.
-
-The expected outcome: 
-```
-"Adventure Anime" is now your active watchlist!
-```
-
-Example of usage: `watchlist -d 2`
-*   For deletion to succeed, you must have at least two watchlist.
-*   If the currently active (selected) watchlist is deleted, then **AniChan** will automatically set
-the first watchlist in the list of watchlist to be the new active watchlist.
-
-The expected outcome: 
-```
-Watchlist "Adventure Anime" has been deleted successfully!
-Changed active watchlist to: "Default".
-```
-
-<br/>
-
 ### 3.5 Add an Anime to the current watchlist: `add`
 Add an anime to the currently selected watchlist
 
@@ -632,37 +582,6 @@ Rating: 86
 Genre: [Action, Adventure, Drama, Sci-Fi]
 ```
 
-### 3.11 Estimate time needed to translate script: `estimate`
-Estimates the time required to finish translating a script, users may provide
-their estimated words per hour speed or use the average translator speed as an estimate.
-
-Format: `estimate <SCRIPT_FILE_NAME> [-wph WORDS_PER_HOUR]`
-*   **Only one** `.txt` file is accepted by **AniChan**.
-
-*   You have to specify the file extension too! E.g. `script.txt`.
-
-*   If the option `-wph` is not specified, **AniChan** will calculate the estimation timings
-using the average translator's translation speed of 400, 500, and 600 words per hour. 
-This will produce three estimation timings for you to consider.
-
-Example of usage: `estimate script.txt`
-
-The expected outcome: 
-```
-Average translator (400 words per hour) takes: 5 hour(s) 47 minute(s).
-Average translator (500 words per hour) takes: 4 hour(s) 38 minute(s).
-Average translator (600 words per hour) takes: 3 hour(s) 51 minute(s).
-```
-
-<br/>
-
-Example of usage: `estimate script.txt -wph 777`
-
-The expected outcome:
-```
-You would need 2 hour(s) 58 minute(s).
-```
-
 ### 3.12 Exit AniChan: `exit`
 Exit **AniChan** 
 
@@ -674,17 +593,3 @@ The expected outcome:
 ```
 Sayonara <NAME>!
 ```
-
-<br/>
-
-### 3.13 Saving and loading data
-User, workspace(s), watchlist(s), and bookmark(s) data will be **saved automatically** when they are 
-created or modified, and will be **loaded automatically** when **AniChan** is launched. 
-
-In the folder where **AniChan** is launched, there will be a `data` folder which would contain these data:
-*   User data is stored in `data/user.txt`.
-
-*   Watchlist(s) data are stored in `data/<WORKSPACE-NAME>/watchlist.txt`, e.g. if your workspace is named "AniTranslator",
-then the watchlist data can be found in `data/AniTranslator/watchlist.txt`.
-
-*   Bookmark(s) data are also stored in the same location as watchlist data, `data/WORKSPACE-NAME/bookmark.txt`.
