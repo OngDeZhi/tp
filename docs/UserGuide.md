@@ -64,6 +64,7 @@ This guide provides you with in-depth information on setting up AniChan and how 
 4.  Open **Command Prompt** and change directory into the folder. Run `java -jar anichan.jar`. 
 5.  Type a command into the command prompt and press `Enter` to execute it. For example, typing `help` and pressing `Enter` will display the help message.
 
+<br/>
 
 ## 3. Features 
 **Some useful notes on the Command Format**
@@ -80,7 +81,7 @@ E.g. `browse [-s SORT_CATEGORY]` can be used simply as `browse` or `browse -s na
 *   The order of parameters are not important.
 E.g. Both `browse -s name -p 2` and `browse -p 2 -s name` are both acceptable and will give you the same result.
 
-> :bulb: Notice that you have a input prompt, this is what it means: WORKSPACE-NAME (WATCHLIST-NAME) #>
+> :bulb: Notice that you have an input prompt, this is what it means: WORKSPACE-NAME (WATCHLIST-NAME) #>
 
 <br/>
 
@@ -103,7 +104,7 @@ Format: `estimate <SCRIPT_FILE_NAME> [-wph WORDS_PER_HOUR]`
 
 <br/>
 
-> :bulb: You have to specify the file extension too! E.g. `script.txt`. |
+> :bulb: You have to specify the file extension too! E.g. `script.txt`.
 
 <br/>
 
@@ -243,7 +244,7 @@ The watchlist management feature provides translators with a simple way to keep 
 
 <br/>
 
-#### 3.7.1 Create a new watchlist
+#### 3.7.1 Create new watchlist
 
 Creates a new watchlist to keep track of anime(s).
 
@@ -310,9 +311,9 @@ Format: `watchlist -d <WATCHLIST_INDEX>`
 
 <br/>
 
-> :bulb: Deletion only works when you have at least two watchlists.
+> :bulb: Deletion only works when you have at least two watchlist.
 
-> :warning: If you delete your currently active watchlist, then the watchlist whose index is 1 in the list after the deletion will become your active watchlist.
+> :warning: If you delete your currently active watchlist, then the watchlist whose index is 1 in the list (after the deletion) will become your active watchlist.
 
 <br/>
 
@@ -340,7 +341,7 @@ User, workspace(s), watchlist(s), and bookmark(s) data will be **saved automatic
 
 In the folder where **AniChan** is launched, there will be a `data` folder which would contain these data:
 * User data will be stored in `data/user.txt`.
-* Watchlist(s) data will be stored in `data/<WORKSPACE-NAME>/watchlist.txt`, e.g. if your workspace is called "AniTranslator", then the watchlist data can be found in `data/AniTranslator/watchlist.txt`.
+* Watchlist(s) data will be stored in `data/<WORKSPACE-NAME>/watchlist.txt`, e.g. if "AniTranslator" is the name of your workspace, then the watchlist data can be found in `data/AniTranslator/watchlist.txt`.
 * Bookmark(s) data will also be stored in the same location as watchlist data, `data/WORKSPACE-NAME/bookmark.txt`.
 
 <br/>
