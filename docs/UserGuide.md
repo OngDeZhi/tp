@@ -35,21 +35,33 @@
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.8.6 [View information of bookmark entry](#386-view-information-of-bookmark-entry)
 <br/>&nbsp;3.9 [Exit AniChan](#39-exit-anichan)
 <br/>&nbsp;3.10 [Saving and loading data](#310-saving-and-loading-data)
-
 4. [FAQ](#4-faq)
 5. [Command Summary](#5-command-summary)
 
 ## 1. Introduction
 
-**AniChan** is an all-rounded tool to effectively create and organize anime lists with viewing statistics, efficiency-focused features, and tools to improve anime-watching experience.
+**Welcome to AniChan!**
 
+AniChan is a free desktop command-line application aimed to improve the efficiency of anime translators. With AniChan, translators could manage their time more effectively by identifying the time needed to translate a script. Moreover, AniChan comes with management features such as workspace, watchlist and bookmark that can help them stay organized and focused on their work.
+
+<br/>
+
+AniChan can also be used on all major operating systems such as Windows and Linux. You can refer to the [Quick Start](#2-quick-start) guide located below for more information on getting your journey started with AniChan!
+
+<br/>
+
+### 1.1 Purpose
+
+This guide provides you with in-depth information on setting up AniChan and how to use the various features offered. 
+
+<br/>
 
 ## 2. Quick Start
 
 1.  Ensure that you have Java 11 or above installed.
 2.  Download the latest version of **AniChan** from [here](https://github.com/AY2021S1-CS2113T-F12-2/tp/releases/tag/V1.0).
 3.  Copy the file to the folder you want to use as the home folder for **AniChan**.
-4.  Open **Command Prompt** or **Powershell** and change directory into the folder. Run `java -jar anichan.jar`. 
+4.  Open **Command Prompt** and change directory into the folder. Run `java -jar anichan.jar`. 
 5.  Type a command into the command prompt and press `Enter` to execute it. For example, typing `help` and pressing `Enter` will display the help message.
 
 
@@ -80,7 +92,38 @@ Format: `help`
 
 <br/>
 
-### 3.2
+### 3.2 Estimate time needed to translate the script
+
+This command allows you to figure out the amount of time needed to finish translating a script. It allows you to estimate based on the amount of words you can translate in an hour, or by using the average translators’ speed of 400, 500, and 600 words per hour. Hence, this would help you to better manage your time and also to not promise your clients with inaccurate timings.
+
+<br/>
+
+Format: `estimate <SCRIPT_FILE_NAME> [-wph WORDS_PER_HOUR]`
+*   If the option `-wph` is not specified, the average translator's translation speed will be used to produce three estimation timings for you to consider.
+
+<br/>
+
+> :bulb: You have to specify the file extension too! E.g. `script.txt`. |
+
+<br/>
+
+Example of usage: `estimate script.txt`
+
+The expected outcome: 
+```
+Average translator (400 words per hour) takes: 5 hour(s) 47 minute(s).
+Average translator (500 words per hour) takes: 4 hour(s) 38 minute(s).
+Average translator (600 words per hour) takes: 3 hour(s) 51 minute(s).
+```
+
+<br/>
+
+Example of usage: `estimate script.txt -wph 777`
+
+The expected outcome:
+```
+You would need 2 hour(s) 58 minute(s).
+```
 
 <br/>
 
@@ -190,7 +233,96 @@ The expected outcome:
 
 <br/>
 
-### 3.7
+### 3.7 Watchlist management
+
+The watchlist management feature provides translators with a simple way to keep track of animes of different genres, allowing them to stay organized and focus on their work.
+
+<br/>
+
+> :bulb: **Active watchlist** refers to the watchlist that you are using for adding anime into or removing anime from.
+
+<br/>
+
+#### 3.7.1 Create a new watchlist
+
+Creates a new watchlist to keep track of anime(s).
+
+Format: `watchlist -n <WATCHLIST_NAME>`
+
+<br/>
+
+> :warning: Watchlist name has to be unique in your workspace.
+
+<br/>
+
+Example of usage: `watchlist -n Adventure Anime`
+
+The expected outcome:
+```
+Watchlist "Adventure Anime" has been created successfully!
+```
+
+<br/>
+
+#### 3.7.2 List all created watchlist(s)
+
+Lists all watchlist(s) that has been created.
+
+Format: `watchlist -l`
+
+Example of usage: `watchlist -l`
+
+The expected outcome:
+```
+Currently, you have 2 watchlist(s):
+    1. Default
+    2. Adventure Anime
+```
+
+<br/>
+
+#### 3.7.3 Select a watchlist to use
+
+If you have created multiple watchlists, you can select another watchlist to be the active watchlist, which you can use for adding anime into or removing anime from.
+
+Format: `watchlist -s <WATCHLIST_INDEX>`
+
+<br/>
+
+> :bulb: Notice how the name of the watchlist in your prompt has changed.
+
+<br/>
+
+Example of usage: `watchlist -s 2`
+
+The expected outcome:
+```
+"Adventure Anime" is now your active watchlist!
+```
+
+<br/>
+
+#### 3.7.4 Delete a watchlist
+
+Delete a watchlist that is no longer needed or was created by mistake.
+
+Format: `watchlist -d <WATCHLIST_INDEX>`
+
+<br/>
+
+> :bulb: Deletion only works when you have at least two watchlists.
+
+> :warning: If you delete your currently active watchlist, then the watchlist whose index is 1 in the list after the deletion will become your active watchlist.
+
+<br/>
+
+Example of usage: `watchlist -d 2`
+
+The expected outcome:
+```
+Watchlist "Adventure Anime" has been deleted successfully!
+Changed active watchlist to: "Default".
+```
 
 <br/>
 
