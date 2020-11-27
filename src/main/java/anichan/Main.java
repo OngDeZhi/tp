@@ -72,7 +72,7 @@ public class Main {
      */
     private void displayWelcome() {
         ui.printWelcomeMessage();
-        LOGGER.log(Level.INFO, "AniChan started! Initializing...");
+        LOGGER.log(Level.INFO, "AniChan started! Initializing..");
         ui.printHorizontalLine();
     }
 
@@ -82,9 +82,11 @@ public class Main {
     private void userSetup() {
         loadUserData();
         ArrayList<Workspace> workspaceList = loadWorkspaceData();
+
         if (user == null) {
             newUserSetup();
         }
+        
         workspaceSetup(workspaceList);
         ui.printHorizontalLine();
     }
@@ -132,6 +134,7 @@ public class Main {
             if (watchlistList.size() == 0) {
                 watchlistList.add(new Watchlist("Default"));
             }
+
             Workspace workspace = new Workspace(workspaceName, watchlistList, bookmark);
             workspaceList.add(workspace);
         }
@@ -202,7 +205,7 @@ public class Main {
                 LOGGER.log(Level.INFO, "Workspace saved to storage: " + newWorkspace.getName());
             } catch (AniException exception) {
                 ui.printErrorMessage(exception.getMessage());
-                LOGGER.log(Level.WARNING, "Exception: " + exception.getMessage());
+                LOGGER.log(Level.SEVERE, "Exception: " + exception.getMessage());
             }
         }
 

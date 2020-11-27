@@ -33,6 +33,13 @@ public class SearchCommand extends Command {
     private String searchGenre;
     private int searchType;
 
+    /**
+     * Creates an instance of instances of Search Command, will set its value respectively.
+     *
+     * @param searchTerm indicates the search term for search by name functionality (if any)
+     * @param searchGenre indicates the search term for search by genre functionality (if any)
+     * @param searchType indicates whether its a search by name or by genre
+     */
     public SearchCommand(String searchTerm, String searchGenre, int searchType) {
         setSearchTerm(searchTerm);
         setSearchType(searchType);
@@ -40,6 +47,9 @@ public class SearchCommand extends Command {
         result = INIT_STRING;
     }
 
+    /**
+     * Creats an instance of a default Search Command.
+     */
     public SearchCommand() {
         searchTerm = INIT_STRING;
         searchGenre = INIT_STRING;
@@ -130,15 +140,30 @@ public class SearchCommand extends Command {
         result = searchOutput.toString();
     }
 
+    /**
+     * Converts to lower-case and sets the search term for search by name.
+     *
+     * @param searchTerm indicates the search term (case-insensitive)
+     */
     public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm.toLowerCase();
         setSearchType(SEARCH_BY_NAME);
     }
 
+    /**
+     * Sets the search option to be either by name or by genre.
+     *
+     * @param searchType indicates the type of search to be performed
+     */
     public void setSearchType(int searchType) {
         this.searchType = searchType;
     }
 
+    /**
+     * Sets the search term for search by genre.
+     *
+     * @param searchGenre indicates the search term for genre (case-insensitive)
+     */
     public void setSearchGenre(String searchGenre) {
         this.searchGenre = searchGenre;
     }

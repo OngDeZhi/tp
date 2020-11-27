@@ -14,12 +14,12 @@ import java.util.logging.Logger;
 public class EstimateParser extends CommandParser {
     private static final String WORDS_PER_HOUR_PARAM = "-wph";
     private static final String SCRIPT_FILE_FORMAT = ".txt";
-    private static final String SLASH = "/";
     private static final String DOT = ".";
     private static final String REGEX_LAST_DOT = "\\.(?=[^.]*$)";
+    private static final String REGEX_INVALID_FILE_NAME_CHARACTER = "^.*[\\\\/:*?\"<>|].*$";
 
     private static final String NO_SCRIPT_FILE_SPECIFIED_ERROR = "No script file specified!";
-    private static final String SPECIFIED_PATH_TO_SCRIPT_FILE_ERROR = "Only specify the script file name!";
+    private static final String FILE_NAME_CONTAINS_INVALID_CHARACTERS_ERROR = "File name contains invalid characters!";
     private static final String INVALID_SCRIPT_FILE_FORMAT_ERROR = "Only \".txt\" script files are accepted!";
     private static final String INVALID_PARAMETER_ERROR = "Estimate command only accepts the parameter: -wph.";
     private static final String ESTIMATE_COMMAND_TOO_MUCH_FIELDS_ERROR = "Estimate command" + TOO_MUCH_FIELDS;
@@ -33,7 +33,7 @@ public class EstimateParser extends CommandParser {
     private int wordsPerHour;
 
     /**
-     * Parses the specified command description.
+     * Parses the string parameters and creates an initialised {@code EstimateCommand} according to the parameters.
      *
      * @param description the specified command description
      * @return initialised {@code EstimateCommand} object
@@ -115,25 +115,9 @@ public class EstimateParser extends CommandParser {
      * @throws AniException when the file name is invalid
      */
     private boolean isValidFileName(String fileName) throws AniException {
-        if (fileName.contains(SLASH)) {
-            throw new AniException(SPECIFIED_PATH_TO_SCRIPT_FILE_ERROR);
-        }
-
-        String[] fileNameSplit = fileName.split(WHITESPACE);
-        int numberOfTextFiles = 0;
-        boolean hasAdditionalFields = false;
-        for (String fileNameParts : fileNameSplit) {
-            if (numberOfTextFiles == 1) {
-                hasAdditionalFields = true;
-            }
-
-            if (fileNameParts.endsWith(SCRIPT_FILE_FORMAT)) {
-                numberOfTextFiles++;
-            }
-        }
-
-        if (hasAdditionalFields) {
-            throw new AniException(ESTIMATE_COMMAND_TOO_MUCH_FIELDS_ERROR);
+        // If two files are specified, then they are treated as the filename for one file.
+        if (fileName.matches(REGEX_INVALID_FILE_NAME_CHARACTER)) {
+            throw new AniException(FILE_NAME_CONTAINS_INVALID_CHARACTERS_ERROR);
         }
 
         return fileName.trim().endsWith(SCRIPT_FILE_FORMAT);

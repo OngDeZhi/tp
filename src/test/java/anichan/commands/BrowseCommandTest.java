@@ -168,7 +168,8 @@ public class BrowseCommandTest {
         });
 
         BrowseParser testParse2 = new BrowseParser();
-        BrowseCommand testBrowse2 = testParse2.parse(ZERO_PAGE_NUM);
-        assertEquals(testBrowse2.getPage(), ONE_ANIME_PER_PAGE);
+        assertThrows(AniException.class, () -> {
+            testParse2.parse(ZERO_PAGE_NUM);
+        });
     }
 }

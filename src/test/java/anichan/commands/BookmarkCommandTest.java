@@ -154,7 +154,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(1)
-    void execute_validAddAnimeIndex_Successful() throws AniException {
+    void execute_validAddAnimeIndex_successfulOutput() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(VALID_ADD_TEST);
         String result = testBookmarkCommand.execute(animeData, storageManager, user);
@@ -163,7 +163,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(2)
-    void execute_validAddAnimeIndex2_Successful() throws AniException {
+    void execute_validAddAnimeIndex2_successfulOutput() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(VALID_ADD_TEST2);
         String result = testBookmarkCommand.execute(animeData, storageManager, user);
@@ -184,7 +184,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(3)
-    void execute_validList_Successful() throws AniException {
+    void execute_validList_successfulOutput() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(VALID_LIST_TEST);
         String result = testBookmarkCommand.execute(animeData, storageManager, user);
@@ -193,7 +193,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(4)
-    void execute_validDelete_Successful() throws AniException {
+    void execute_validDelete_successfulOutput() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(VALID_DELETE_TEST);
         String result = testBookmarkCommand.execute(animeData, storageManager, user);
@@ -203,7 +203,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(5)
-    void execute_validEdit_Successful() throws AniException {
+    void execute_validEdit_successfulOutput() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(VALID_EDIT_TEST);
         String result = testBookmarkCommand.execute(animeData, storageManager, user);
@@ -213,7 +213,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(6)
-    void execute_validNote_Successful() throws AniException {
+    void execute_validNote_successfulOutput() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(VALID_NOTE_TEST);
         String result = testBookmarkCommand.execute(animeData, storageManager, user);
@@ -236,7 +236,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(7)
-    void execute_validInfo_Successful() throws AniException {
+    void execute_validInfo_successfulOutput() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(VALID_SINGLE_INPUT_TEST);
         String result = testBookmarkCommand.execute(animeData, storageManager, user);
@@ -255,7 +255,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(8)
-    void execute_validRemoveNote_Successful() throws AniException {
+    void execute_validRemoveNote_successfulOutput() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(VALID_REMOVE_NOTE_TEST);
         String result = testBookmarkCommand.execute(animeData, storageManager, user);
@@ -348,7 +348,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(16)
-    void execute_invalidNoteIndexRemoveNote_AniException() throws AniException {
+    void execute_invalidNoteIndexRemoveNote_ThrowsAniException() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(INVALID_REMOVE_NOTE_INDEX_TEST);
 
@@ -359,7 +359,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(17)
-    void execute_zeroIndex_AniException() throws AniException {
+    void execute_zeroIndex_ThrowsAniException() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(ZERO_ADD_ANIME_INDEX_TEST);
 
@@ -398,7 +398,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(18)
-    void execute_invalidEpisodeEdit_AniException() throws AniException {
+    void execute_invalidEpisodeEdit_ThrowsAniException() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(INVALID_EDIT_EPISODE_TEST);
 
@@ -409,7 +409,7 @@ class BookmarkCommandTest {
 
     @Test
     @Order(19)
-    void execute_invalidForbiddenCharNote_AniException() throws AniException {
+    void execute_invalidForbiddenCharNote_ThrowsAniException() throws AniException {
         BookmarkParser testParse = new BookmarkParser();
         BookmarkCommand testBookmarkCommand = testParse.parse(INVALID_NOTE_FORBIDDEN_CHAR_TEST);
 

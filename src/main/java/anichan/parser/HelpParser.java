@@ -18,13 +18,14 @@ public class HelpParser extends CommandParser {
     private static final String COMMAND_REMOVE = "remove";
     private static final String COMMAND_VIEW = "view";
     private static final String COMMAND_BOOKMARK = "bookmark";
+    private static final String HELP_COMMAND = "Help command";
     private String commandOption;
     
     /**
      * Parses the specified command description.
      * 
      * @param description the specified command description
-     * @return initialised {@HelpCommand} object
+     * @return initialised {@code HelpCommand} object
      * @throws AniException when an error occurred while parsing the command description
      */
     public HelpCommand parse(String description) throws AniException {
@@ -42,7 +43,7 @@ public class HelpParser extends CommandParser {
         String[] splitDescription = description.split(WHITESPACE);
         
         if (splitDescription.length > 1) {
-            throw new AniException("Help command" + TOO_MUCH_FIELDS);
+            throw new AniException(HELP_COMMAND + TOO_MUCH_FIELDS);
         }
         
         switch (description) {

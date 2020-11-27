@@ -22,14 +22,16 @@ public class WatchlistParser extends CommandParser {
     private static final String WATCHLIST_COMMAND_TOO_MANY_PARAMETERS_ERROR = "Watchlist command"
                                                                               + TOO_MUCH_PARAMETERS;
     private static final String WATCHLIST_NAME_IS_EMPTY_ERROR = "Watchlist name cannot be empty!";
+    private static final String WATCHLIST_NAME_TOO_LONG_ERROR = "Watchlist name should not exceed 30 characters!";
     private static final String WATCHLIST_NAME_IS_INVALID_ERROR = "Watchlist name can only consist of up to "
                                                                   + "30 alphanumeric characters and/or spaces!";
     private static final String WATCHLIST_INDEX_IS_EMPTY_ERROR = "Watchlist index cannot be empty!";
     private static final String WATCHLIST_INDEX_IS_ZERO_ERROR = "Watchlist index cannot be zero!";
-    private static final String NO_PARAMETER_TO_CHECK_ERROR = "There should be a one parameter to check!";
     private static final String INVALID_PARAMETER_ERROR = "Watchlist command only accepts the parameters: "
                                                     + "-n, -l, -s, and -d.";
+    private static final String NO_PARAMETER_TO_CHECK = "There should be a one parameter to check!";
 
+    private static final int MAX_WATCHLIST_NAME_LENGTH = 30;
     private static final int DEFAULT_WATCHLIST_INDEX = -1;
     private static final int CREATION_REQUIRED_PARAMETER_COUNT = 2;
     private static final int LIST_REQUIRED_PARAMETER_COUNT = 1;
@@ -42,7 +44,7 @@ public class WatchlistParser extends CommandParser {
     private int watchlistIndex;
 
     /**
-     * Parses the specified command description.
+     * Parses the string parameters and creates an initialised {@code WatchlistCommand} according to the parameters.
      *
      * @param description the specified command description
      * @return initialised {@code WatchlistCommand} object
@@ -112,18 +114,25 @@ public class WatchlistParser extends CommandParser {
      * Validates that watchlist creation parameters are valid.
      * <ul>
      *     <li>Have the exact required parameter count.</li>
+     *     <li>Watchlist name is not empty.</li>
+     *     <li>Watchlist name does not contain special characters.</li>
      * </ul>
      *
      * @param parsedParts the parsed parameters and the value
      * @throws AniException when the watchlist creation parameters are invalid
      */
     private void checkCreationParameters(String[] parsedParts) throws AniException {
-        assert parsedParts.length != 0 : NO_PARAMETER_TO_CHECK_ERROR;
+        assert parsedParts.length != 0 : NO_PARAMETER_TO_CHECK;
         if (parsedParts.length != CREATION_REQUIRED_PARAMETER_COUNT) {
             throw new AniException(WATCHLIST_NAME_IS_EMPTY_ERROR);
         }
 
-        if (!parsedParts[1].trim().matches(REGEX_ALPHANUMERIC_WITH_SPACE)) {
+        String watchlistName = parsedParts[1].trim();
+        if (watchlistName.length() > MAX_WATCHLIST_NAME_LENGTH) {
+            throw new AniException(WATCHLIST_NAME_TOO_LONG_ERROR);
+        }
+
+        if (!watchlistName.matches(REGEX_ALPHANUMERIC_WITH_SPACE)) {
             throw new AniException(WATCHLIST_NAME_IS_INVALID_ERROR);
         }
     }
@@ -138,7 +147,7 @@ public class WatchlistParser extends CommandParser {
      * @throws AniException when the watchlist list parameters are invalid
      */
     private void checkListParameters(String[] parsedParts) throws AniException {
-        assert parsedParts.length != 0 : NO_PARAMETER_TO_CHECK_ERROR;
+        assert parsedParts.length != 0 : NO_PARAMETER_TO_CHECK;
         if (parsedParts.length > LIST_REQUIRED_PARAMETER_COUNT) {
             throw new AniException(WATCHLIST_COMMAND_TOO_MUCH_FIELDS_ERROR);
         }
@@ -148,6 +157,7 @@ public class WatchlistParser extends CommandParser {
      * Validates that the watchlist modification (select and delete) parameters are valid.
      * <ul>
      *     <li>Have the exact required parameter count.</li>
+     *     <li>Provided only one parameter value.</li>
      *     <li>Provided a parameter value that can be parsed to a positive integer.</li>
      * </ul>
      *
@@ -155,7 +165,7 @@ public class WatchlistParser extends CommandParser {
      * @throws AniException when the watchlist modification parameters are invalid
      */
     private void checkModificationParameters(String[] parsedParts) throws AniException {
-        assert parsedParts.length != 0 : NO_PARAMETER_TO_CHECK_ERROR;
+        assert parsedParts.length != 0 : NO_PARAMETER_TO_CHECK;
         if (parsedParts.length != MODIFICATION_REQUIRED_PARAMETER_COUNT) {
             throw new AniException(WATCHLIST_INDEX_IS_EMPTY_ERROR);
         }

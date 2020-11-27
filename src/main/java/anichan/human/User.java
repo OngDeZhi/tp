@@ -1,6 +1,5 @@
 package anichan.human;
 
-import anichan.Main;
 import anichan.exception.AniException;
 import static anichan.logger.AniLogger.getAniLogger;
 
@@ -16,11 +15,12 @@ public class User extends Human {
     private static final String GENDER_MALE = "male";
     private static final String GENDER_FEMALE = "female";
     private static final String GENDER_OTHER = "other";
-    private static final Logger LOGGER = getAniLogger(Main.class.getName());
-    private static final String EXCEPTION_WORKPLACE_NOT_FOUND = "Workspace does not exist!";
-    private static final String EXCEPTION_SIMILAR_WORKPLACE_FOUND = "Workspace with similar name found!";
     private static final String HONORIFIC_FEMALE = "-chan";
     private static final String HONORIFIC_NEUTRAL = "-san";
+    private static final Logger LOGGER = getAniLogger(User.class.getName());
+    private static final String EXCEPTION_WORKPLACE_NOT_FOUND = "Workspace does not exist!";
+    private static final String EXCEPTION_SIMILAR_WORKPLACE_FOUND = "Workspace with similar name found!";
+    private static final String EXCEPTION_WORKSPACE_ALREADY_EXIST = "Workspace already exist!";
     private static final String ASSERTION_INVALID_MESSAGE = "Input invalid.";
 
     private Gender gender;
@@ -110,7 +110,7 @@ public class User extends Human {
     }
 
     /**
-     * Get Workspace ArrayList which the User manages.
+     * Gets Workspace ArrayList which the User manages.
      *
      * @return Workspace ArrayList
      */
@@ -134,12 +134,13 @@ public class User extends Human {
 
             activeWorkspace = inputWorkspace;
         } catch (Exception e) {
+            LOGGER.log(Level.WARNING, EXCEPTION_WORKPLACE_NOT_FOUND);
             throw new AniException(EXCEPTION_WORKPLACE_NOT_FOUND);
         }
     }
 
     /**
-     * Get the current Workspace User is working on.
+     * Gets the current Workspace User is working on.
      *
      * @return active Workspace which the User is using
      */
@@ -168,9 +169,9 @@ public class User extends Human {
     }
 
     /**
-     * Gets total number of workspace(s) the User have.
+     * Gets total number of workspace(s) the User owns.
      *
-     * @return size of Workspace(s) the User have
+     * @return size of Workspace(s) the User owns
      */
     public int getTotalWorkspaces() {
         return workspaceList.size();
@@ -187,7 +188,7 @@ public class User extends Human {
         assert name != null : ASSERTION_INVALID_MESSAGE;
 
         if (findWorkspace(name) != null) {
-            throw new AniException("Workspace already exist!");
+            throw new AniException(EXCEPTION_WORKSPACE_ALREADY_EXIST);
         } else {
             checkWorkspaceName(name.toLowerCase());
             Workspace newWorkspace = new Workspace(name);
@@ -206,7 +207,7 @@ public class User extends Human {
      * @throws AniException if Workspace is unable to be deleted
      */
     public void deleteWorkspace(String toDeleteWorkspace) throws AniException {
-        assert toDeleteWorkspace != null : "Workspace details should not have any null.";
+        assert toDeleteWorkspace != null : ASSERTION_INVALID_MESSAGE;
 
         Workspace targetWorkspace = findWorkspace(toDeleteWorkspace);
 

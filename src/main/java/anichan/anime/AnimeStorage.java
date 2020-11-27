@@ -176,7 +176,7 @@ public class AnimeStorage {
      *
      * @param filename name of the resource stream file
      * @return file read in string
-     * @throws AniException if error reading resourse stream file
+     * @throws AniException if error reading resource stream file
      */
     public String getDataFromJarFile(String filename) throws AniException {
         assert filename != null : FILENAME_NULL_ERROR;

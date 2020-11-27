@@ -43,7 +43,7 @@ class BookmarkParserTest {
     //==================== Valid Input Test ===========================
 
     @Test
-    void parse_validSingleParameter_Successful() throws AniException {
+    void parse_validSingleParameter_successfulOutput() throws AniException {
         BookmarkParser testInfo1 = new BookmarkParser();
         BookmarkCommand testCommand = testInfo1.parse(VALID_SINGLE_INPUT_TEST);
         BookmarkParser testInfo2 = new BookmarkParser();
@@ -53,35 +53,35 @@ class BookmarkParserTest {
     }
 
     @Test
-    void parse_validFieldForNote_Successful() throws AniException {
+    void parse_validFieldForNote_successfulOutput() throws AniException {
         BookmarkParser test1 = new BookmarkParser();
         BookmarkCommand testCommand = test1.parse(VALID_NOTE_TEST);
         assertEquals(testCommand.getBookmarkAction(), "n");
     }
 
     @Test
-    void parse_validList_Successful() throws AniException {
+    void parse_validList_successfulOutput() throws AniException {
         BookmarkParser test1 = new BookmarkParser();
         BookmarkCommand testCommand = test1.parse(VALID_LIST_TEST);
         assertEquals(testCommand.getBookmarkAction(), "l");
     }
 
     @Test
-    void parse_validEdit_Successful() throws AniException {
+    void parse_validEdit_successfulOutput() throws AniException {
         BookmarkParser test1 = new BookmarkParser();
         BookmarkCommand testCommand = test1.parse(VALID_EDIT_TEST);
         assertEquals(testCommand.getBookmarkAction(), "e");
     }
 
     @Test
-    void parse_validAdd_Successful() throws AniException {
+    void parse_validAdd_successfulOutput() throws AniException {
         BookmarkParser test1 = new BookmarkParser();
         BookmarkCommand testCommand = test1.parse(VALID_ADD_TEST);
         assertEquals(testCommand.getBookmarkAction(), "a");
     }
 
     @Test
-    void parse_validDelete_Successful() throws AniException {
+    void parse_validDelete_successfulOutput() throws AniException {
         BookmarkParser test1 = new BookmarkParser();
         BookmarkCommand testCommand = test1.parse(VALID_DELETE_TEST);
         assertEquals(testCommand.getBookmarkAction(), "d");

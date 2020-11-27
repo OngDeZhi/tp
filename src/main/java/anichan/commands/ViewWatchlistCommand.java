@@ -21,6 +21,7 @@ public class ViewWatchlistCommand extends Command {
     private static final String OUT_OF_BOUND_INDEX_ERROR = "Watchlist ID is invalid!";
     private static final String NO_WATCHLIST_ERROR = "There are no watchlists in your workspace!";
     private static final String EMPTY_WATCHLIST_ERROR = "There are no anime in ";
+    private static final String RESULT_BUILD_SUCCESSFUL = "Result built successfully";
     
     private Integer watchlistIndex;
     private static final Logger LOGGER = AniLogger.getAniLogger(ViewWatchlistCommand.class.getName());
@@ -76,6 +77,7 @@ public class ViewWatchlistCommand extends Command {
             throw new AniException(EMPTY_WATCHLIST_ERROR + selectedWatchlistName + " watchlist!");
         }
         String result = buildAnimeInWatchlist(animeData, selectedWatchlist);
+        LOGGER.log(Level.INFO, RESULT_BUILD_SUCCESSFUL);
         
         return result;
     }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class BookmarkStorage extends Storage {
     private static final String BOOKMARK_FILE_NAME = "bookmark.txt";
     private static final String BOOKMARK_LINE_DELIMITER = "~";
+    private static final String EMPTY_BOOKMARK_FILE_MESSAGE = "Empty bookmark file.";
 
     private final String storageDirectory;
 
@@ -56,7 +57,7 @@ public class BookmarkStorage extends Storage {
         String bookmarkFilePath = storageDirectory + workspaceName + File.separator + BOOKMARK_FILE_NAME;
         String fileString = readFile(bookmarkFilePath);
         if (fileString.isBlank()) {
-            return "Empty bookmark file.";
+            return EMPTY_BOOKMARK_FILE_MESSAGE;
         }
 
         String[] fileLines = fileString.split(System.lineSeparator());
@@ -127,7 +128,7 @@ public class BookmarkStorage extends Storage {
         }
 
         if (hasCorruptedBookmark) {
-            return "Not all loaded successfully.";
+            return "Not loaded successfully.";
         } else {
             return "Loaded successfully.";
         }

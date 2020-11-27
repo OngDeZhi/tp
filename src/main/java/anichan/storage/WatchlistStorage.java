@@ -147,6 +147,10 @@ public class WatchlistStorage extends Storage {
         }
 
         String[] animes = animeListStringContent.split(DELIMITER_FOR_ENCODED_ANIME_LIST);
+        if (animes.length == 0) {
+            return null;
+        }
+
         for (String animeIndex : animes) {
             String trimmedIndex = animeIndex.trim();
             if (!isPositiveInteger(trimmedIndex)) {

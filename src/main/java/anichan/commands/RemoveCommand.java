@@ -21,7 +21,9 @@ public class RemoveCommand extends Command {
     private static final String OUT_OF_BOUND_INDEX_ERROR = "Invalid Watchlist Index!";
     private static final String EMPTY_WATCHLIST_ERROR = "Watchlist is empty!";
     private static final String SUCCESSFUL_REMOVE = "Successfully removed anime from active watchlist";
-
+    private static final String NULL_ANIME_INDEX = "Anime index in watchlist should not be null";
+    private static final String RESULT_BUILD_SUCCESSFUL = "Result built successfully";
+    
     private Integer animeIndexInWatchlist;
     private Integer animeIndex;
     private static final Logger LOGGER = AniLogger.getAniLogger(RemoveCommand.class.getName());
@@ -46,11 +48,13 @@ public class RemoveCommand extends Command {
      */
     @Override
     public String execute(AnimeData animeData, StorageManager storageManager, User user) throws AniException {
+        assert animeIndexInWatchlist != null : NULL_ANIME_INDEX;
         Workspace activeWorkspace = user.getActiveWorkspace();
         
         removeFromWatchlist(storageManager, activeWorkspace);
         Anime anime = animeData.getAnime(animeIndex);
         String animeName = anime.getAnimeName();
+        LOGGER.log(Level.INFO, RESULT_BUILD_SUCCESSFUL);
 
         return animeName + " successfully removed from watchlist!";
     }

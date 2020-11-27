@@ -21,7 +21,9 @@ public class AddToWatchlistCommand extends Command {
     private static final String DUPLICATE_ANIME_ERROR = "Anime is already in this watchlist!";
     private static final String OUT_OF_BOUND_INDEX_ERROR = "Anime ID is invalid!";
     private static final String SUCCESSFUL_ADD = "Successfully added and stored anime into active watchlist";
-
+    private static final String NULL_ANIME_INDEX = "Anime index should not be null";
+    private static final String RESULT_BUILD_SUCCESSFUL = "Result built successfully";
+    
     private Integer animeIndex;
     private static final Logger LOGGER = AniLogger.getAniLogger(AddToWatchlistCommand.class.getName());
 
@@ -45,11 +47,13 @@ public class AddToWatchlistCommand extends Command {
      */
     @Override
     public String execute(AnimeData animeData, StorageManager storageManager, User user) throws AniException {
+        assert animeIndex != null : NULL_ANIME_INDEX;
         Workspace activeWorkspace = user.getActiveWorkspace();
         addToWatchlist(animeData, storageManager, activeWorkspace);
         
         Anime anime = animeData.getAnime(animeIndex);
         String animeName = anime.getAnimeName();
+        LOGGER.log(Level.INFO, RESULT_BUILD_SUCCESSFUL);
 
         return animeName + " added to watchlist!";
     }

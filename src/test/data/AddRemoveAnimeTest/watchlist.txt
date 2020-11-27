@@ -1,1 +1,1 @@
-TestWatchlist | []
+TestWatchlist | [0, 1]

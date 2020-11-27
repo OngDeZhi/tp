@@ -31,7 +31,7 @@ public class BookmarkCommand extends Command {
     private static final String ANIME_ID_EXIST_ERROR = " Anime index is already in bookmark.";
     private static final String BOOKMARK_ID_ERROR = " Bookmark index is outside Bookmark range "
             + "(Bigger than bookmark entries).";
-    private static final String NOTES_ID_ERROR = " Note index is outside Bookmark range "
+    private static final String NOTES_ID_ERROR = " Note index is outside Notes range "
             + "(Bigger than number of notes).";
     private static final String BOOKMARK_EPISODE_ERROR = " is invalid." + System.lineSeparator()
             + "Episode provided is bigger than the total episode.";
@@ -86,6 +86,16 @@ public class BookmarkCommand extends Command {
 
     private static final Logger LOGGER = AniLogger.getAniLogger(BookmarkCommand.class.getName());
 
+    /**
+     * Create a new instance of BookmarkCommand using values extracted from BookmarkParser.
+     *
+     * @param bookmarkAction the bookmark action that determine bookmark operations
+     * @param bookmarkIndex the bookmark entry id
+     * @param animeIndex the anime id to add to bookmark
+     * @param bookmarkEpisode the current episode to be edited for bookmark entry
+     * @param noteIndex the note id to remove for bookmark entry
+     * @param bookmarkNote the note to add for bookmark entry
+     */
     public BookmarkCommand(String bookmarkAction, int bookmarkIndex, int animeIndex, int bookmarkEpisode,
                            int noteIndex, String bookmarkNote) {
         assert bookmarkAction != null : BOOKMARK_ACTION_NULL_ERROR;
@@ -101,13 +111,13 @@ public class BookmarkCommand extends Command {
     /**
      * Handles the main execution of bookmark command using the bookmark action.
      * <ul>
-     *     <li>e: edit bookmark episode</li>
-     *     <li>a: add a bookmark entry</li>
-     *     <li>d: delete a bookmark entry</li>
-     *     <li>l: list all bookmark entry</li>
-     *     <li>i: display all information for a bookmark entry </li>
-     *     <li>n: add a note to bookmark entry</li>
-     *     <li>r: remove a note from bookmark entry</li>
+     *     <li>e: edit bookmark episode.</li>
+     *     <li>a: add a bookmark entry.</li>
+     *     <li>d: delete a bookmark entry.</li>
+     *     <li>l: list all bookmark entry.</li>
+     *     <li>i: display all information for a bookmark entry.</li>
+     *     <li>n: add a note to bookmark entry.</li>
+     *     <li>r: remove a note from bookmark entry.</li>
      * </ul>
      *
      * @param animeData      used to retrieve anime information
@@ -432,6 +442,12 @@ public class BookmarkCommand extends Command {
     }
 
     //Getters and Setters
+
+    /**
+     * Gets the bookmark action of the bookmark command.
+     *
+     * @return bookmark action for the bookmark command
+     */
     public String getBookmarkAction() {
         return this.bookmarkAction;
     }

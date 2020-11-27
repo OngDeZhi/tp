@@ -25,29 +25,37 @@ class StorageManagerTest {
     private static final String SCRIPT_FILE_NAME = "script.txt";
     private static final String INVALID_TEST_DIRECTORY = "a" + File.separator + "b" + File.separator;
     private static final String VALID_TEST_DIRECTORY = "src" + File.separator + "test" + File.separator
-                                                        + "data" + File.separator + "StorageManagerTest"
-                                                        + File.separator;
+            + "data" + File.separator + "StorageManagerTest"
+            + File.separator;
     private static final String VALID_FILE_DIRECTORY = VALID_TEST_DIRECTORY + "DirectoryWithValidFile"
-                                                        + File.separator;
+            + File.separator;
     private static final String EMPTY_FILE_DIRECTORY = VALID_TEST_DIRECTORY + "DirectoryWithEmptyFileAndDirectory"
-                                                         + File.separator;
+            + File.separator;
     private static final String INVALID_FILE_DIRECTORY = VALID_TEST_DIRECTORY + "DirectoryWithInvalidFile"
-                                                         + File.separator;
+            + File.separator;
+    private static final String INVALID_USER_DATA_DIRECTORY = VALID_TEST_DIRECTORY + "InvalidUserDataDirectory"
+            + File.separator;
+
+    private static final String BOOKMARK_LOAD_TEST = "Loaded successfully.";
+    private static final String BOOKMARK_LOAD_FAIL_TEST = "Not loaded successfully.";
 
     private StorageManager validFileSM;
     private StorageManager invalidFileSM;
     private StorageManager emptySM;
     private StorageManager invalidDirectorySM;
+    private StorageManager invalidUserDataDirectorySM;
+
     private User userToLoad;
     private Bookmark bookmarkToLoad;
     private ArrayList<Watchlist> watchlistListForLoad;
 
     @BeforeEach
-    public void setUp() throws AniException {
+    public void setUp() {
         validFileSM = new StorageManager(VALID_FILE_DIRECTORY);
         invalidFileSM = new StorageManager(INVALID_FILE_DIRECTORY);
         emptySM = new StorageManager(EMPTY_FILE_DIRECTORY);
         invalidDirectorySM = new StorageManager(INVALID_TEST_DIRECTORY);
+        invalidUserDataDirectorySM = new StorageManager(INVALID_USER_DATA_DIRECTORY);
 
         userToLoad = null;
         bookmarkToLoad = null;
@@ -97,6 +105,7 @@ class StorageManagerTest {
     @Test
     void loadUser_invalidUserFile_throwsAniException() {
         assertThrows(AniException.class, () -> userToLoad = invalidFileSM.loadUser());
+        assertThrows(AniException.class, () -> userToLoad = invalidUserDataDirectorySM.loadUser());
     }
 
     // ========================== Watchlist Saving and Loading ==========================
@@ -159,23 +168,38 @@ class StorageManagerTest {
         });
     }
 
+    //@@author Ong Xin Bin
     // ========================== Bookmark Saving and Loading ==========================
+    @Test
+    void loadBookmark() throws AniException {
+        Bookmark bookmark = new Bookmark();
+        String loadBookmarkResult = validFileSM.loadBookmark(VALID_WORKSPACE, bookmark);
+        assertEquals(BOOKMARK_LOAD_TEST, loadBookmarkResult);
+    }
+
+    @Test
+    void loadBookmark_invalidBookmarkFormat_unsuccessfulOutput() throws AniException {
+        Bookmark bookmark = new Bookmark();
+        String loadBookmarkResult = invalidFileSM.loadBookmark(ALL_INVALID_WORKSPACE, bookmark);
+        assertEquals(BOOKMARK_LOAD_FAIL_TEST, loadBookmarkResult);
+    }
+
 
     @Test
     void loadBookmark_invalidDirectorySM_throwsAniException() throws AniException {
         // Invalid Directory
-        assertThrows(AniException.class, () ->  invalidDirectorySM.loadBookmark(TEST_WORKSPACE_NAME, bookmarkToLoad));
+        assertThrows(AniException.class, () -> invalidDirectorySM.loadBookmark(TEST_WORKSPACE_NAME, bookmarkToLoad));
     }
 
     @Test
     void loadBookmark_emptyBookmarkFile_throwsAniException() {
 
-        assertThrows(AniException.class, () ->  emptySM.loadBookmark(TEST_WORKSPACE_NAME,bookmarkToLoad));
+        assertThrows(AniException.class, () -> emptySM.loadBookmark(TEST_WORKSPACE_NAME, bookmarkToLoad));
     }
 
     @Test
     void loadBookmark_invalidBookmarkFile_throwsAniException() {
-        assertThrows(AniException.class, () ->  invalidFileSM.loadBookmark(TEST_WORKSPACE_NAME,bookmarkToLoad));
+        assertThrows(AniException.class, () -> invalidFileSM.loadBookmark(TEST_WORKSPACE_NAME, bookmarkToLoad));
     }
 
 }

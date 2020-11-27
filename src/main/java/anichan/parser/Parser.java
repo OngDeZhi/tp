@@ -27,8 +27,11 @@ public class Parser {
     private static final String INIT_STRING = "";
 
     /**
-     * Prints the main menu of the application
-     * and requests for command.
+     * Parses the full command that the user provides.
+     * 
+     * @param fullCommand the user input to parse
+     * @return initialise {@Code Command} object
+     * @throws AniException when an error occurred while parsing the command
      */
     public Command getCommand(String fullCommand) throws AniException {
         LOGGER.log(Level.INFO, "Parse: " + fullCommand);
@@ -45,45 +48,40 @@ public class Parser {
         switch (command) {
         case COMMAND_WORKSPACE:
             return new WorkspaceParser().parse(description);
-
         case COMMAND_BROWSE:
             return new BrowseParser().parse(description);
-
         case COMMAND_SEARCH:
             return new SearchParser().parse(description);
-
         case COMMAND_WATCHLIST:
             return new WatchlistParser().parse(description);
-            
         case COMMAND_VIEW:
             return new ViewWatchlistParser().parse(description);
-
         case COMMAND_ADD:
             return new AddToWatchlistParser().parse(description);
-        
         case COMMAND_REMOVE:
             return new RemoveCommandParser().parse(description);
-
         case COMMAND_BOOKMARK:
             return new BookmarkParser().parse(description);
-
         case COMMAND_ESTIMATE:
             return new EstimateParser().parse(description);
-        
         case COMMAND_INFO:
             return new InfoParser().parse(description);
-
         case COMMAND_HELP:
             return new HelpParser().parse(description);
-
         case COMMAND_EXIT:
             return new ExitParser().parse(description);
-
         default:
             throw new AniException(UNKNOWN_COMMAND_ERROR);
         }
     }
 
+    /**
+     * Performs input validation on the input before splitting it.
+     *
+     * @param input the input to parse
+     * @return the split input.
+     * @throws AniException if the input is empty
+     */
     public static String[] parseUserInput(String input) throws AniException {
         if (input == null || input.isEmpty()) {
             LOGGER.log(Level.WARNING, "Exception occurred");

@@ -20,6 +20,9 @@ public class AniLogger {
 
     private static final Level LOG_FILE_LEVEL = Level.INFO;
     private static final Level CONSOLE_LEVEL = Level.SEVERE;
+    private static final String ASSERTION_LOGGER_IS_NULL = "Logger is null!";
+    private static final String LOG_FAILED_FAILE_HANDLER_CREATION = "Failed to add file handler for logger.";
+    private static final String EXCEPTION_FAILED_LOG_FILE_CREATE = "Failed to create log file/folder.";
 
     private static FileHandler fileHandler;
     private static ConsoleHandler consoleHandler;
@@ -42,12 +45,12 @@ public class AniLogger {
     }
 
     /**
-     * Adds Handler for console logging.
+     * Adds handler for console logging.
      *
      * @param logger logger object with console handler
      */
     private static void addConsoleHandler(Logger logger) {
-        assert logger != null : "Logger is null!";
+        assert logger != null : ASSERTION_LOGGER_IS_NULL;
 
         if (consoleHandler == null) {
             consoleHandler = createConsoleHandler();
@@ -68,12 +71,12 @@ public class AniLogger {
     }
 
     /**
-     * Adds Handler for file logging.
+     * Adds handler for file logging.
      *
      * @param logger logger object with file handler
      */
     private static void addFileHandler(Logger logger) {
-        assert logger != null : "Logger is null!";
+        assert logger != null : ASSERTION_LOGGER_IS_NULL;
 
         try {
             if (fileHandler == null) {
@@ -82,7 +85,7 @@ public class AniLogger {
 
             logger.addHandler(fileHandler);
         } catch (IOException exceptionMessage) {
-            logger.log(Level.WARNING, "Failed to add file handler for logger.");
+            logger.log(Level.WARNING, LOG_FAILED_FAILE_HANDLER_CREATION);
         }
     }
 
@@ -104,7 +107,7 @@ public class AniLogger {
         }
 
         if (!isFileCreated) {
-            throw new IOException("Failed to create log file/folder.");
+            throw new IOException(EXCEPTION_FAILED_LOG_FILE_CREATE);
         }
 
         SimpleFormatter formatter = new SimpleFormatter();
@@ -123,7 +126,7 @@ public class AniLogger {
      * @param logger logger object
      */
     private static void clearHandlers(Logger logger) {
-        assert logger != null : "Logger is null!";
+        assert logger != null : ASSERTION_LOGGER_IS_NULL;
 
         Handler[] handlers = logger.getHandlers();
 

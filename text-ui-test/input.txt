@@ -2,6 +2,30 @@ Tiled say decay spoil now walls meant house. My mr interest thoughts screened of
 Male
 Uneasy barton seeing remark happen his has Am possible offering at contempt mr distance stronger amis
 feMale5
+ 
+Other
+
+Male
+  
+Female
+      
+Male
+     
+
+          
+males
+                                 h.
+Male
+              l    /  
+MaLe
+                                                                 .
+Male
+                                                 a O
+Femal3
+   
+   
+     3
+M4LE
 Friendly cat
 Cat
 Dog 12345
@@ -232,28 +256,196 @@ watchlist -n abc -hello
 watchlist -n -hello
 watchlist -n testing1233333333333333333333333333333333333333
 watchlist -n abc
+watchlist -n
 watchlist -l
 watchlist -l a
 watchlist -l -hello
 watchlist -l -----
 watchlist -l -1
 watchlist -s 2
+watchlist -s 0
 watchlist -s 1 2
 watchlist -s -1
 watchlist -s one
 watchlist -s -hello
 watchlist -s -------
 watchlist -d 2
+watchlist -d 0
 watchlist -d 1 2
 watchlist -d -1
 watchlist -d one
 watchlist -d -hello
 watchlist -d -------
-watchlist             -n           Hello               World
-watchlist             -l
-watchlist             -l                         abc
-watchlist                -s                 2
-watchlist                -s                 5                   5
-watchlist                     -d                 2
-watchlist                     -d                 5              5
+watchlist -d 1
+watchlist -d 1
+watchlist -d 2
+watchlist -s 1
+  watchlist             -n           Hello               World
+  watchlist             -l
+  watchlist             -l                         abc
+  watchlist                -s                 2
+  watchlist                -s                 5                   5
+  watchlist                     -d                 2
+  watchlist                     -d                 5              5
+workspace
+workspace -unknown helloworld
+workspace -n abc
+workspace -n abc -hello
+workspace -n -hello
+workspace -n testing1233333333333333333333333333333333333333
+workspace -n abc
+workspace -l
+workspace -l a
+workspace -l -hello
+workspace -l -----
+workspace -l -1
+workspace -s 2
+workspace -s 1 2
+workspace -s -1
+workspace -s one
+workspace -s -hello
+workspace -s -------
+workspace -d 2
+workspace -d 1 2
+workspace -d -1
+workspace -d one
+workspace -d -hello
+workspace -d -------
+workspace             -n           Hello               World
+workspace             -l
+workspace             -l                         abc
+workspace                -s                 2
+workspace                -s                 5                   5
+workspace                     -d                 2
+workspace                     -d                 5              5
+workspacess
+workspace 
+workspace -l
+workspace -d 5
+workspace -d -5
+workspace -d abc
+workspace -d Hello World
+workspace -d Hello   World
+workspace -d   Hello World   
+workspace -l
+Hello               World
+workspace -d Hello               World
+workspace -l
+estimate
+estimate -wph 800
+estimate -hello
+estimate -----
+estimate script
+estimate script.
+estimate script.t
+estimate script.tx
+estimate script-wph.txt.txt-wph 700
+estimate script-wph.txt.txt .txt
+estimate script.txt hello
+estimate script.txt -hello
+estimate script.txt -----
+estimate script.txt -   wph 700
+estimate script.txt -wph 0
+estimate script.txt -wph -1
+estimate script.txt -wph 1 2
+estimate script.txt -wph one
+estimate script.txt -wph -hello
+estimate script.txt -wph 1 -wph 2
+estimate script.txt -wph 1 -hello
+estimate -wph -1
+estimate -wph one
+estimate -wph 1 -wph 2
+estimate -wph 1 -hello
+estimate -wph -hello
+  estimate  do-not-exist-file.txt
+  estimate  do-not-exist-file.txt  -wph    123
+  estimate /.txt
+  estimate \.txt
+  estimate ?.txt
+  estimate :.txt
+  estimate *.txt
+  estimate <.txt
+  estimate >.txt
+  estimate |.txt
+workspace -wph 800
+workspace -hello
+workspace -----
+workspace script
+workspace script.
+workspace script.t
+workspace script.tx
+workspace script-wph.txt.txt-wph 700
+workspace script-wph.txt.txt .txt
+workspace script.txt hello
+workspace script.txt -hello
+workspace script.txt -----
+workspace script.txt -   wph 700
+workspace script.txt -wph 0
+workspace script.txt -wph -1
+workspace script.txt -wph 1 2
+workspace script.txt -wph one
+workspace script.txt -wph -hello
+workspace script.txt -wph 1 -wph 2
+workspace script.txt -wph 1 -hello
+workspace -wph -1
+workspace -wph one
+workspace -wph 1 -wph 2
+workspace -wph 1 -hello
+workspace -wph -hello
+  workspace  do-not-exist-file.txt
+  workspace  do-not-exist-file.txt  -wph    123
+  workspace /.txt
+  workspace \.txt
+  workspace ?.txt
+  workspace :.txt
+  workspace *.txt
+  workspace <.txt
+  workspace >.txt
+  workspace |.txt
+user
+user -n abc
+user -h
+user -d abc
+user ??
+workspace -l
+workspace -n abc
+workspace -n abc2
+workspace -n abc3
+workspace -n abc4
+workspace -n abc5
+workspace -n abc6
+workspace -n abc7
+workspace -n abc8
+workspace -l
+workspace -d abc
+workspace -l
+workspace -d abc 
+workspace -d abc 2
+workspace -l
+workspace -d abc2 
+workspace -d abc2  
+workspace -d abc2
+workspace -l
+workspace -s abc3
+workspace -d abc3
+workspace -d abc3 
+workspace -d abc3  
+workspace -d  abc3
+workspace -d  abc3 
+workspace -d abc3
+workspace -s abc3
+workspace -d abc3
+workspace -n abc3
+workspace -d abc3
+workspace -s abc3
+workspace -d abc3
+workspace -d abc4
+workspace -d abc5
+workspace -d abc6
+workspace -l
+workspace -s abc4
+workspace -l
+workspace -n hello dave
+workspace -n hello DAVE
+workspace -l
 exit

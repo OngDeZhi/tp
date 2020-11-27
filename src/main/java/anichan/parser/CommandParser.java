@@ -13,6 +13,7 @@ public abstract class CommandParser {
     protected static final String GENRE_PARAM = "g";
     protected static final String DASH = "-";
     protected static final String WHITESPACE = " ";
+    protected static final String INVALID_OPTION = " is not a valid option";
     protected static final String NOT_RECOGNISED = " is not recognised!";
     protected static final String PARAMETER_ERROR_HEADER = "Parameter : -";
     protected static final String REQUIRE_ADDITIONAL_FIELD = " requires an additional field.";

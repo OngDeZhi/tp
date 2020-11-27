@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class WorkspaceParserTest {
 
     @Test
-    void parse_invalidParameter_throwsAniException() {
+    void parse_invalidParameterSimple_throwsAniException() {
         WorkspaceParser testParse = new WorkspaceParser();
 
         assertThrows(AniException.class, () -> testParse.parse(""));
@@ -35,10 +35,7 @@ class WorkspaceParserTest {
         assertThrows(AniException.class, () -> testParse.parse("888 -n"));
         assertThrows(AniException.class, () -> testParse.parse("888 -n "));
         assertThrows(AniException.class, () -> testParse.parse("888 -n ."));
-        assertThrows(AniException.class, () -> testParse.parse(" -abcdefg12345!@#$%^*&(#)$%| "));
-        assertThrows(AniException.class, () -> testParse.parse(" -h hello -m world -t confusion "));
     }
-
 
     @Test
     void parser_legitimateName_success() {
@@ -75,6 +72,15 @@ class WorkspaceParserTest {
         assertThrows(AniException.class, () -> testParse.parse("-n and this%"));
         assertThrows(AniException.class, () -> testParse.parse("-n ["));
         assertThrows(AniException.class, () -> testParse.parse("-n ;"));
+
+        assertThrows(AniException.class, () -> testParse.parse("./abc"));
+        assertThrows(AniException.class, () -> testParse.parse("./      "));
+        assertThrows(AniException.class, () -> testParse.parse(".         "));
+        assertThrows(AniException.class, () -> testParse.parse("       .         "));
+        assertThrows(AniException.class, () -> testParse.parse("       ."));
+        assertThrows(AniException.class, () -> testParse.parse(".         "));
+        assertThrows(AniException.class, () -> testParse.parse(" -abcdefg12345!@#$%^*&(#)$%| "));
+        assertThrows(AniException.class, () -> testParse.parse(" -h hello -m world -t confusion "));
     }
 
     @Test
@@ -84,9 +90,12 @@ class WorkspaceParserTest {
         // Test if name can be longer than 30 characters
         assertThrows(AniException.class, () -> testParse.parse("-n 45fx1JDGmVQfxLF0nnLAF5AUon1HOjS"));
         assertThrows(AniException.class, () -> testParse.parse("-n Wj1dHkUETeRU11EgJkb423bLNXsFDtR0X6sTnESc"));
+        assertThrows(AniException.class, () -> testParse.parse("-n Wj1dHkUETeRU1"
+                + "1EgJkb423bLNXsFDtWj1dHkUETeRU11EgJkb423bLNXsFDtR0X6sTnEScR0X6sTnESc"));
 
         // Test if 30 or less than
         assertDoesNotThrow(() -> testParse.parse("-n 45fx1JDGmVQfxLF0nnLAF5AUon1HOj"));
         assertDoesNotThrow(() -> testParse.parse("-n WezZJBpRg0"));
+        assertDoesNotThrow(() -> testParse.parse("-n a"));
     }
 }

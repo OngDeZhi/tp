@@ -20,29 +20,61 @@ public class AnimeData {
     private ArrayList<Anime> animeDataList;
 
 
+    /**
+     * Creates an instance of AnimeData using animeDataList provided.
+     *
+     * @param animeDataList the animeDataList to load
+     */
     public AnimeData(ArrayList<Anime> animeDataList) {
         Anime.setTotalAnime(RESET_ANIME_ID);
         this.animeDataList = animeDataList;
     }
 
+    /**
+     * Creates a new instance of AnimeData.
+     * Loads the animeDataList from offline storage.
+     *
+     * @throws AniException if error loading animeDataList from offline storage
+     */
     public AnimeData() throws AniException {
         Anime.setTotalAnime(RESET_ANIME_ID);
         AnimeStorage animeStorage = new AnimeStorage();
         loadAnimeData(animeStorage.readAnimeDatabase());
     }
 
+    /**
+     * Loads the animeDataList using an anime list provided.
+     *
+     * @param animeDataList anime data list to be loaded
+     */
     public void loadAnimeData(ArrayList<Anime> animeDataList) {
         this.animeDataList = animeDataList;
     }
 
+    /**
+     * Gets the anime object using its anime id.
+     *
+     * @param animeIndex the anime id
+     * @return the anime object of the anime id
+     */
     public Anime getAnime(Integer animeIndex) {
         return animeDataList.get(animeIndex);
     }
 
+    /**
+     * Gets the size of anime data source.
+     *
+     * @return size of anime data list
+     */
     public int getSize() {
         return animeDataList.size();
     }
 
+    /**
+     * Get the anime data list.
+     *
+     * @return anime data list, arraylist of anime object
+     */
     public ArrayList<Anime> getAnimeDataList() {
         return animeDataList;
     }

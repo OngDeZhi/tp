@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * Handles parsing for workspace command.
  */
 public class WorkspaceParser extends CommandParser {
-    private static final Logger LOGGER = AniLogger.getAniLogger(BookmarkParser.class.getName());
+    private static final Logger LOGGER = AniLogger.getAniLogger(WorkspaceParser.class.getName());
     private static final String ASSERTION_INVALID_MESSAGE = "Input should not be null.";
     private static final String EXCEPTION_INVALID_PARAMETERS = "Invalid parameters detected!";
     private static final String EXCEPTION_ILLEGAL_WORKSPACE_NAME = "Workspace name must be shorter than "
@@ -21,7 +21,7 @@ public class WorkspaceParser extends CommandParser {
     private static final String COMMAND_SWITCH = "s";
     private static final String COMMAND_LIST = "l";
     private static final String COMMAND_DELETE = "d";
-    private static final String REGEX_SPACE_CHARACTER = " ";
+    private static final String SPACE_CHARACTER = " ";
     private static final int MAXIMUM_WORKSPACE_NAME_LENGTH = 30;
 
     private String commandOption;
@@ -64,7 +64,7 @@ public class WorkspaceParser extends CommandParser {
         try {
             String cleanedCommand = paramGiven[1].trim();
 
-            String[] givenOption = cleanedCommand.split(REGEX_SPACE_CHARACTER, 2);
+            String[] givenOption = cleanedCommand.split(SPACE_CHARACTER, 2);
 
             switch (givenOption[0]) {
             case COMMAND_NEW:

@@ -40,13 +40,25 @@ class WatchlistParserTest {
     }
 
     @Test
-    void parse_invalidParameter_throwsAniException() {
+    void parse_noParameter_throwsAniException() {
         assertThrows(AniException.class, () -> watchlistParser.parse(""));
+    }
+
+    @Test
+    void parse_invalidParameter_throwsAniException() {
         assertThrows(AniException.class, () -> watchlistParser.parse("-invalid"));
-        assertThrows(AniException.class, () -> watchlistParser.parse("-n one -one two"));
-        assertThrows(AniException.class, () -> watchlistParser.parse("hello -n testing"));
         assertThrows(AniException.class, () -> watchlistParser.parse("-nnewWatchlistName"));
         assertThrows(AniException.class, () -> watchlistParser.parse("- n newWatchlistName"));
+    }
+
+    @Test
+    void parse_tooManyParameter_throwsAniException() {
+        assertThrows(AniException.class, () -> watchlistParser.parse("-n one -n two"));
+    }
+
+    @Test
+    void parse_fieldBeforeParameter_throwsAniException() {
+        assertThrows(AniException.class, () -> watchlistParser.parse("hello -n testing"));
     }
 
     @Test
@@ -57,9 +69,19 @@ class WatchlistParserTest {
     }
 
     @Test
-    void parse_invalidParameterValue_throwsAniException() {
-        assertThrows(AniException.class, () -> watchlistParser.parse("-n *-*"));
+    void parse_tooManyFieldsForList_throwsAniException() {
         assertThrows(AniException.class, () -> watchlistParser.parse("-l a"));
+    }
+
+    @Test
+    void parse_invalidWatchlistName_throwsAniException() {
+        assertThrows(AniException.class, () -> watchlistParser.parse("-n                 "));
+        assertThrows(AniException.class, () -> watchlistParser.parse("-n alongwatchlistnamethatwouldfail"));
+        assertThrows(AniException.class, () -> watchlistParser.parse("-n *-*"));
+    }
+
+    @Test
+    void parse_invalidWatchlistIndex_throwsAniException() {
         assertThrows(AniException.class, () -> watchlistParser.parse("-s 0"));
         assertThrows(AniException.class, () -> watchlistParser.parse("-d -1"));
         assertThrows(AniException.class, () -> watchlistParser.parse("-s one"));

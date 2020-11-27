@@ -24,6 +24,8 @@ public class EstimateCommand extends Command {
     private static final int[] AVERAGE_TRANSLATOR_WORDS_PER_HOUR = {400, 500, 600};
     private static final Logger LOGGER = AniLogger.getAniLogger(EstimateCommand.class.getName());
 
+    private static final String INVALID_WORDS_PER_HOUR = "Words per hour value cannot be zero!";
+
     private final String scriptFileName;
     private final int wordsPerHour;
 
@@ -49,7 +51,7 @@ public class EstimateCommand extends Command {
      * @param animeData used to retrieve anime information
      * @param storageManager used to save or read AniChan data
      * @param user used to modify user data
-     * @return estimation timing generated after executing the command
+     * @return estimated timing generated after executing the command
      * @throws AniException when an error occurred while executing the command
      */
     @Override
@@ -59,7 +61,8 @@ public class EstimateCommand extends Command {
         int wordCount = fileContent.split(SPLIT_WHITESPACE).length;
         LOGGER.log(Level.INFO, wordCount + " words in the script (" + scriptFileName + ").");
 
-        assert (wordsPerHour > 0 || wordsPerHour == DEFAULT_WORDS_PER_HOUR) : "Words per hour value cannot be zero!";
+        assert (wordsPerHour > 0 || wordsPerHour == DEFAULT_WORDS_PER_HOUR) : INVALID_WORDS_PER_HOUR;
+
         StringBuilder commandResult = new StringBuilder();
         if (wordsPerHour != DEFAULT_WORDS_PER_HOUR) {
             double timeNeeded = wordCount / (double) wordsPerHour;

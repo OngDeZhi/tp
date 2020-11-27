@@ -29,7 +29,7 @@ public abstract class Human {
      * @throws AniException if name is empty, beyond max length, or contain non alphanumerical characters
      */
     private void checkName(String name) throws AniException {
-        if (name.isEmpty()) {
+        if (name.isEmpty() || name.isBlank()) {
             throw new AniException(EXCEPTION_INVALID_NAME);
         } else if (name.length() > MAX_NAME_LENGTH) {
             throw new AniException(EXCEPTION_INVALID_NAME);

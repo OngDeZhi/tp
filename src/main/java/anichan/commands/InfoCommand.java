@@ -15,6 +15,8 @@ import java.util.logging.Logger;
  */
 public class InfoCommand extends Command {
     private static final String OUT_OF_BOUND_INDEX_ERROR = "Anime ID is invalid!";
+    private static final String NULL_ANIME_INDEX = "Anime index should not be null";
+    private static final String RESULT_BUILD_SUCCESSFUL = "Result built successfully";
     
     private Integer animeIndex;
     private static final Logger LOGGER = AniLogger.getAniLogger(InfoCommand.class.getName());
@@ -40,6 +42,7 @@ public class InfoCommand extends Command {
      */
     @Override
     public String execute(AnimeData animeData, StorageManager storageManager, User user) throws AniException {
+        assert animeIndex != null : NULL_ANIME_INDEX;
         int indexSize = animeData.getSize();
         StringBuilder result = new StringBuilder();
         
@@ -55,6 +58,7 @@ public class InfoCommand extends Command {
         result.append(System.lineSeparator());
         String animeInfo = animeData.returnAnimeInfo(animeIndex);
         result.append(animeInfo);
+        LOGGER.log(Level.INFO, RESULT_BUILD_SUCCESSFUL);
 
         return result.toString();
     }
